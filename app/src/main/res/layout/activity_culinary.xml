@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/culinary_background" />
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context="com.daxstyle.recipe.activity.CulinaryActivity">
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="5dp"
+            android:elevation="2dp"
+            android:orientation="vertical"
+            app:cardBackgroundColor="@color/transparentLess"
+            app:cardCornerRadius="6dp"
+            app:cardPreventCornerOverlap="false">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:onClick="saveAll"
+                    android:paddingLeft="15dp"
+                    android:src="@drawable/ic_back" />
+
+                <EditText
+                    android:id="@+id/etTitle"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/transparent"
+                    android:hint="@string/title"
+                    android:imeOptions="actionNext"
+                    android:inputType="text"
+                    android:maxLength="25"
+                    android:maxLines="1"
+                    android:paddingEnd="0dp"
+                    android:paddingStart="25dp"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/gray"
+                    android:textSize="22dp" />
+
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_margin="5dp"
+            app:cardBackgroundColor="@color/transparentLess"
+            app:cardCornerRadius="6dp">
+
+            <LinearLayout
+                android:id="@+id/llReport"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:weightSum="4">
+
+                <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <ImageView
+                        android:id="@+id/ivReport2"
+                        style="@style/ivReport"
+                        android:contentDescription="@+id/ivReport1"
+                        android:tag="2" />
+
+                    <TextView
+                        android:id="@+id/tvReport2"
+                        style="@style/tvReport" />
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <ImageView
+                        android:id="@+id/ivReport3"
+                        style="@style/ivReport"
+                        android:contentDescription="@+id/ivReport2"
+                        android:tag="3" />
+
+                    <TextView
+                        android:id="@+id/tvReport3"
+                        style="@style/tvReport" />
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <ImageView
+                        android:id="@+id/ivReport4"
+                        style="@style/ivReport"
+                        android:contentDescription="@+id/ivReport3"
+                        android:tag="4" />
+
+                    <TextView
+                        android:id="@+id/tvReport4"
+                        style="@style/tvReport" />
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <ImageView
+                        android:id="@+id/ivReport5"
+                        style="@style/ivReport"
+                        android:contentDescription="@+id/ivReport4"
+                        android:tag="5" />
+
+                    <TextView
+                        android:id="@+id/tvReport5"
+                        style="@style/tvReport" />
+                </FrameLayout>
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <include layout="@layout/serve_prep" />
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:descendantFocusability="blocksDescendants"
+            android:elevation="2dp"
+            android:orientation="vertical"
+            app:cardBackgroundColor="@color/transparentLess"
+            app:cardCornerRadius="6dp">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal"
+                android:padding="10dp"
+                android:weightSum="2">
+
+
+                <TextView
+                    android:id="@+id/tvIngredients"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.8"
+                    android:text="@string/ingredients"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <View style="@style/horizontalSep" />
+
+
+                <TextView
+                    android:id="@+id/tvDirections"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.2"
+                    android:paddingEnd="0dp"
+                    android:paddingStart="10dp"
+                    android:text="@string/directions"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_weight="1"
+            android:elevation="2dp"
+            android:orientation="vertical"
+            app:cardBackgroundColor="@color/transparentLess"
+            app:cardCornerRadius="6dp">
+
+
+            <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:padding="10dp"
+                android:weightSum="2">
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.8">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_oat" />
+
+                    <EditText
+                        android:id="@+id/etIngredient"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/transparent"
+                        android:gravity="start"
+                        android:imeOptions="actionNext"
+                        android:inputType="textMultiLine"
+                        android:paddingBottom="30dp"
+                        android:paddingEnd="5dp"
+                        android:paddingStart="30dp"
+                        android:textColor="@color/white"
+                        android:textSize="14sp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentEnd="true"
+                        android:paddingEnd="3dp"
+                        android:paddingStart="0dp"
+                        android:src="@drawable/ic_vegetables" />
+                </RelativeLayout>
+
+
+                <View style="@style/horizontalSep" />
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.2">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="3dp"
+                        android:src="@drawable/ic_rolling_pin" />
+
+                    <EditText
+                        android:id="@+id/etDirection"
+                        android:layout_width="match_parent"
+
+                        android:layout_height="match_parent"
+                        android:background="@color/transparent"
+                        android:gravity="start"
+                        android:imeOptions="actionDone"
+                        android:inputType="textMultiLine"
+                        android:paddingBottom="30dp"
+                        android:paddingEnd="5dp"
+                        android:paddingStart="30dp"
+                        android:textColor="@color/white"
+                        android:textSize="16sp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentEnd="true"
+                        android:src="@drawable/ic_cooking" />
+                </RelativeLayout>
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <LinearLayout
+            android:id="@+id/pageContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="12dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/rounded_corner_for_button"
+                android:onClick="saveAll"
+                android:text="@string/save"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
+    </LinearLayout>
+</RelativeLayout>

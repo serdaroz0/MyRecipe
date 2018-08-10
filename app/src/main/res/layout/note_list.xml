@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/main_background" />
+
+    <LinearLayout
+        android:id="@+id/llMain"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="5dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvCulinary"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingEnd="0dp"
+                android:paddingStart="31dp"
+                android:text="@string/culinary"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/newNote"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:contentDescription="@+id/newNote"
+                android:onClick="newNote"
+                android:paddingLeft="10dp"
+                android:src="@drawable/ic_newnote" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvNoNote"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginTop="25dp"
+            android:text="@string/note_desc"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:visibility="gone" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/my_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical"
+            android:textColor="@color/white" />
+    </LinearLayout>
+</RelativeLayout>

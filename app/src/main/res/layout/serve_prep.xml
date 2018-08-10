@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="100dp">
+
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="5dp"
+        android:background="@color/transparent"
+        android:elevation="2dp"
+        android:orientation="vertical"
+        app:cardBackgroundColor="@color/transparentLess"
+        app:cardCornerRadius="6dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="4dp"
+            android:baselineAligned="false"
+            android:orientation="horizontal"
+            android:weightSum="3">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:padding="5dp"
+                android:weightSum="1">
+
+                <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <ImageView
+                        android:id="@+id/ivReport1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="5dp"
+                        android:contentDescription="@+id/ivPhoto"
+                        android:onClick="addPhoto"
+                        android:src="@drawable/ic_camera"
+                        android:tag="1" />
+
+                    <TextView
+                        android:id="@+id/tvReport1"
+                        style="@style/tvReport" />
+                </FrameLayout>
+
+                <View
+                    style="@style/horizontalSep"
+                    android:layout_marginStart="10dp" />
+            </LinearLayout>
+
+            <LinearLayout
+
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:weightSum="2">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="0dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="4dp"
+                        android:src="@drawable/ic_whisk_and_bowl" />
+
+                    <TextView
+                        android:id="@+id/tvPrep"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:paddingEnd="0dp"
+                        android:paddingStart="5dp"
+                        android:paddingTop="4dp"
+                        android:text="@string/prep_time"
+                        android:textAlignment="center"
+                        android:textColor="@color/white" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingEnd="0dp"
+                    android:paddingStart="5dp"
+                    android:paddingTop="10dp"
+                    android:weightSum="2">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="25dp"
+                        android:layout_weight="1.1">
+
+                        <Spinner
+                            android:id="@+id/spnTime"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/rounded_for_spinner" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tvMinute"
+                        android:layout_width="0dp"
+                        android:layout_height="25dp"
+                        android:layout_weight="0.9"
+                        android:gravity="center"
+                        android:text="@string/minute"
+                        android:textColor="@color/white" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp">
+
+                <View style="@style/horizontalSep" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:weightSum="2">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="0dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="4dp"
+                        android:src="@drawable/ic_meal" />
+
+                    <TextView
+                        android:id="@+id/tvServe"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:paddingEnd="16dp"
+                        android:paddingStart="0dp"
+                        android:paddingTop="4dp"
+                        android:text="@string/serve_time"
+                        android:textAlignment="center"
+                        android:textColor="@color/white" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingEnd="0dp"
+                    android:paddingStart="5dp"
+                    android:paddingTop="10dp"
+                    android:weightSum="2">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="25dp"
+                        android:layout_weight="1.1">
+
+                        <Spinner
+                            android:id="@+id/spnTime2"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/rounded_for_spinner" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tvMinute2"
+                        android:layout_width="0dp"
+                        android:layout_height="25dp"
+                        android:layout_weight="0.9"
+                        android:gravity="center"
+                        android:text="@string/minute"
+                        android:textColor="@color/white" />
+                </LinearLayout>
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+
+</RelativeLayout>
