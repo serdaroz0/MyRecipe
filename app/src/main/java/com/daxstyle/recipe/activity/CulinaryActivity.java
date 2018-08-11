@@ -1,22 +1,12 @@
 package com.daxstyle.recipe.activity;
 
 import android.Manifest;
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
 import android.graphics.Typeface;
-import android.media.ExifInterface;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
-import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -31,8 +21,9 @@ import android.widget.TextView;
 import com.daxstyle.recipe.R;
 import com.daxstyle.recipe.helper.Util;
 import com.daxstyle.recipe.model.CardModel;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -40,16 +31,13 @@ import java.util.List;
 
 public class CulinaryActivity extends AppCompatActivity {
     EditText etTitle, etDirection, etIngredient;
-    Uri uri, photoUri;
+    Uri photoUri;
     TextView tvIngredients, tvDirections, tvMinute, tvMinute2, tvServe, tvPrep;
     static ArrayList<CardModel> cardModels;
     Spinner spnTime, spnTime2;
-    private static final int CAMERA_REQUEST = 1888;
-    private static final int GALLERY_REQUEST = 1887;
     protected static final String[] requiredPermissions;
     private static final int PERMISSION_REQUEST = 0;
-    int x = 0, count = 0;
-    Bitmap bitmap;
+    int x = 0;
     ArrayList<String> imagesUri;
     int position;
     int tag;
@@ -119,10 +107,6 @@ public class CulinaryActivity extends AppCompatActivity {
 
     }
 
-    public void back(View view) {
-        startActivity(new Intent(this, MainActivity.class));
-    }
-
     public void spnAdapter() {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.Numbers, android.R.layout.simple_spinner_item);
@@ -134,7 +118,10 @@ public class CulinaryActivity extends AppCompatActivity {
 
     public void addPhoto(View view) {
         tag = Integer.parseInt(view.getTag().toString());
-        startDialog();
+        verifyPermissions();
+        CropImage.activity()
+                .setGuidelines(CropImageView.Guidelines.ON)
+                .start(this);
 
     }
 
@@ -146,49 +133,38 @@ public class CulinaryActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 imagesUri.remove(ivNumber.getTag());
-                if (tag == 1) {
-                    ivNumber.setImageResource(R.drawable.ic_camera);
-                } else {
-                    ivNumber.setImageResource(R.drawable.ic_addimage);
-                }
+                ivNumber.setClickable(true);
+//                if (tag == 1) {
+//                    ivNumber.setImageResource(R.drawable.ic_camera);
+//                } else {
+                ivNumber.setImageResource(R.drawable.ic_addimage);
                 tvNumber.setVisibility(View.GONE);
-
             }
         });
-       
-        if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
-            Bitmap photo = null;
-            try {
-                photo = MediaStore.Images.Media.getBitmap(this.getContentResolver(), photoUri);
-                photoUri = Uri.parse(String.valueOf(photoUri));
-                stringUri = photoUri.toString();
-                imagesUri.add(stringUri);
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            if (resultCode == RESULT_OK) {
+                try {
+                    photoUri = result.getUri();
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), photoUri);
+                    photoUri = Uri.parse(String.valueOf(photoUri));
+                    stringUri = photoUri.toString();
+                    imagesUri.add(stringUri);
+                    if (bitmap != null) {
+                        ivNumber.setImageBitmap(bitmap);
+                        tvNumber.setVisibility(View.VISIBLE);
+                        ivNumber.setClickable(false);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            if (photo != null) {
-                ivNumber.setImageBitmap(photo);
-                tvNumber.setVisibility(View.VISIBLE);
-                ivNumber.setClickable(false);
+            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                Exception error = result.getError();
+                error.printStackTrace();
             }
         }
-        if (requestCode == GALLERY_REQUEST && resultCode == Activity.RESULT_OK && null != data) {
-            Uri selectedImage = data.getData();
-            final String path = getPathFromURI(selectedImage);
-            if (path != null) {
-                File f = new File(path);
-                uri = Uri.fromFile(f);
-                bitmap = BitmapFactory.decodeFile(getPathFromURI(selectedImage));
-                stringUri = uri.toString();
-                imagesUri.add(stringUri);
-            }
-            if (bitmap != null) {
-                ivNumber.setImageBitmap(bitmap);
-                tvNumber.setVisibility(View.VISIBLE);
-                ivNumber.setClickable(false);
-            }
-        }
+
     }
 
 
@@ -218,47 +194,6 @@ public class CulinaryActivity extends AppCompatActivity {
             Util.showToast(this, R.string.saved);
         }
         startActivity(new Intent(this, MainActivity.class));
-    }
-
-    private void startDialog() {
-        AlertDialog.Builder builder;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            builder = new AlertDialog.Builder(this, android.R.style.Theme_Material_Dialog_Alert);
-        } else {
-            builder = new AlertDialog.Builder(this);
-        }
-        builder.setTitle(R.string.choose);
-        verifyPermissions();
-        builder.setPositiveButton(R.string.gallery,
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface arg0, int arg1) {
-                        Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                        startActivityForResult(galleryIntent, GALLERY_REQUEST);
-
-                    }
-                });
-
-        builder.setNegativeButton(R.string.camera,
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface arg0, int arg1) {
-                        Util.getPrefInt(getApplicationContext(), "count");
-                        Log.d("onClick: ", String.valueOf(Util.getPrefInt(getApplicationContext(), "count")));
-                        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
-                        StrictMode.setVmPolicy(builder.build());
-                        File output = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), "Culinary" + count + ".jpg");
-                        photoUri = Uri.fromFile(output);
-                        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT,
-                                photoUri);
-                        startActivityForResult(cameraIntent, CAMERA_REQUEST);
-                        count++;
-                        if (count == 100) {
-                            count = 0;
-                        }
-                        Util.setPrefInt(getApplicationContext(), "count", count);
-                    }
-                });
-        builder.show();
     }
 
 
@@ -306,60 +241,6 @@ public class CulinaryActivity extends AppCompatActivity {
         requiredPermissions = perms.toArray(new String[perms.size()]);
     }
 
-    public String getPathFromURI(Uri contentUri) {
-        String res = null;
-        String[] proj = {MediaStore.Images.Media.DATA};
-        Cursor cursor = getContentResolver().query(contentUri, proj, null, null, null);
-        if (cursor.moveToFirst()) {
-            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-            res = cursor.getString(column_index);
-        }
-        cursor.close();
-        return res;
-    }
-
-    public static Bitmap rotateBitmap(Bitmap bitmap, int orientation) {
-
-        Matrix matrix = new Matrix();
-        switch (orientation) {
-            case ExifInterface.ORIENTATION_NORMAL:
-                return bitmap;
-            case ExifInterface.ORIENTATION_FLIP_HORIZONTAL:
-                matrix.setScale(-1, 1);
-                break;
-            case ExifInterface.ORIENTATION_ROTATE_180:
-                matrix.setRotate(180);
-                break;
-            case ExifInterface.ORIENTATION_FLIP_VERTICAL:
-                matrix.setRotate(180);
-                matrix.postScale(-1, 1);
-                break;
-            case ExifInterface.ORIENTATION_TRANSPOSE:
-                matrix.setRotate(90);
-                matrix.postScale(-1, 1);
-                break;
-            case ExifInterface.ORIENTATION_ROTATE_90:
-                matrix.setRotate(90);
-                break;
-            case ExifInterface.ORIENTATION_TRANSVERSE:
-                matrix.setRotate(-90);
-                matrix.postScale(-1, 1);
-                break;
-            case ExifInterface.ORIENTATION_ROTATE_270:
-                matrix.setRotate(-90);
-                break;
-            default:
-                return bitmap;
-        }
-        try {
-            Bitmap bmRotated = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
-            bitmap.recycle();
-            return bmRotated;
-        } catch (OutOfMemoryError e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
 }
 
 

@@ -43,20 +43,16 @@ public class LoginActivity extends AppCompatActivity {
 //        loadLocale();
         previouslyStarted = Util.getPrefBoolean(this, "firstTime");
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.Gender, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                R.array.Gender, android.R.layout.simple_spinner_dropdown_item);
         spnGender.setAdapter(adapter);
         ArrayAdapter<CharSequence> days = ArrayAdapter.createFromResource(this,
-                R.array.days, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                R.array.days, android.R.layout.simple_spinner_dropdown_item);
         spnBirthDate.setAdapter(days);
         ArrayAdapter<CharSequence> months = ArrayAdapter.createFromResource(this,
-                R.array.months, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                R.array.months, android.R.layout.simple_spinner_dropdown_item);
         spnBirthDate2.setAdapter(months);
         ArrayAdapter<CharSequence> years = ArrayAdapter.createFromResource(this,
-                R.array.years, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                R.array.years, android.R.layout.simple_spinner_dropdown_item);
         spnBirthDate3.setAdapter(years);
         if (previouslyStarted) {
             startActivity(new Intent(this, MainActivity.class));
