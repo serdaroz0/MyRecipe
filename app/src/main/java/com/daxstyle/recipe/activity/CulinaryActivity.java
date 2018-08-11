@@ -119,9 +119,7 @@ public class CulinaryActivity extends AppCompatActivity {
     public void addPhoto(View view) {
         tag = Integer.parseInt(view.getTag().toString());
         verifyPermissions();
-        CropImage.activity()
-                .setGuidelines(CropImageView.Guidelines.ON)
-                .start(this);
+
 
     }
 
@@ -169,6 +167,7 @@ public class CulinaryActivity extends AppCompatActivity {
 
 
     public void saveAll(View view) {
+
         if (getIntent().getBooleanExtra("fromEdit", false)) {
             cardModels.get(position).setDirection(etDirection.getText().toString());
             cardModels.get(position).setIngredient(etIngredient.getText().toString());
@@ -179,19 +178,24 @@ public class CulinaryActivity extends AppCompatActivity {
             Util.saveObject(this, imagesUri, "Uri.obj");
             Util.saveObject(this, cardModels, "CardModels.obj");
             Util.showToast(this, R.string.saved);
+
         } else {
-            Util.loadCards(this, cardModels);
-            CardModel cardModel = new CardModel();
-            cardModel.setDirection(etDirection.getText().toString());
-            cardModel.setIngredient(etIngredient.getText().toString());
-            cardModel.setPrepTime(spnTime.getSelectedItemPosition());
-            cardModel.setServeTime(spnTime2.getSelectedItemPosition());
-            cardModel.setTitle(etTitle.getText().toString());
-            cardModel.setImagesUri(imagesUri);
-            cardModels.add(cardModel);
-            Util.saveObject(this, imagesUri, "Uri.obj");
-            Util.saveObject(this, cardModels, "CardModels.obj");
-            Util.showToast(this, R.string.saved);
+            if (etDirection.getText() != null && etIngredient.getText() != null && etTitle.getText() != null) {
+                Util.loadCards(this, cardModels);
+                CardModel cardModel = new CardModel();
+                cardModel.setDirection(etDirection.getText().toString());
+                cardModel.setIngredient(etIngredient.getText().toString());
+                cardModel.setPrepTime(spnTime.getSelectedItemPosition());
+                cardModel.setServeTime(spnTime2.getSelectedItemPosition());
+                cardModel.setTitle(etTitle.getText().toString());
+                cardModel.setImagesUri(imagesUri);
+                cardModels.add(cardModel);
+                Util.saveObject(this, imagesUri, "Uri.obj");
+                Util.saveObject(this, cardModels, "CardModels.obj");
+                Util.showToast(this, R.string.saved);
+            } else {
+                Util.showToast(this, R.string.error_desc);
+            }
         }
         startActivity(new Intent(this, MainActivity.class));
     }
@@ -214,18 +218,22 @@ public class CulinaryActivity extends AppCompatActivity {
             if (ActivityCompat.checkSelfPermission(this, perm) != PackageManager.PERMISSION_GRANTED) {
                 return false;
             }
+
         }
+        CropImage.activity()
+                .setGuidelines(CropImageView.Guidelines.ON)
+                .start(this);
         return true;
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[],
-                                           int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
             case PERMISSION_REQUEST: {
                 // If request is cancelled, the result arrays are empty.
                 if (!hasAllPermissions()) {
                     finish();
+
                 }
                 return;
             }
@@ -235,8 +243,7 @@ public class CulinaryActivity extends AppCompatActivity {
     static {
         List<String> perms = new ArrayList<>(Arrays.asList(
                 Manifest.permission.READ_EXTERNAL_STORAGE,
-                Manifest.permission.CAMERA,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
+                Manifest.permission.CAMERA
         ));
         requiredPermissions = perms.toArray(new String[perms.size()]);
     }

@@ -38,6 +38,7 @@
     <string name="No">Hayır</string>
     <string name="data_not_found">Data not found</string>
     <string name="example_number">(555) 555 55 55</string>
+    <string name="error_desc">Lütfen en az bir alanı doldurunuz.</string>
 
     <string-array name="Gender">
         <item>Kadın</item>
