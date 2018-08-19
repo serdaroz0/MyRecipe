@@ -240,5 +240,14 @@
                 android:textColor="@color/white" />
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/tvPrivacy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:onClick="privacy"
+            android:text="@string/privacy_policy"
+            android:textColor="@color/blue" />
+
     </LinearLayout>
 </FrameLayout>

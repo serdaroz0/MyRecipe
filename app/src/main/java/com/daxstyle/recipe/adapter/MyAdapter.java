@@ -177,7 +177,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
                             for (int i = 0; i < cardModels.get(position).getImagesUri().size(); i++) {
                                 urit = Uri.parse(cardModels.get(position).getImagesUri().get(i));
                                 uri.add(urit);
-                                Log.d("arraylist: ", String.valueOf(uri));
                             }
                             if (uri != null) {
                                 emailIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uri);

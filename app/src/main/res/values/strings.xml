@@ -29,7 +29,7 @@
     <string name="serve_time">Serve\n Time</string>
     <string name="choose">Please Choose</string>
     <string name="saved">Saved</string>
-    <string name="culinary">My recipes</string>
+    <string name="culinary">My Recipes</string>
     <string name="note_desc">You don\'t have a note yet</string>
     <string name="whatsapp">Whatsapp</string>
     <string name="gmail">Mail</string>
@@ -40,6 +40,7 @@
     <string name="data_not_found">Data not Found</string>
     <string name="example_number">(555) 555 55 55</string>
     <string name="error_desc">Please fill at least one field.</string>
+    <string name="privacy_policy">Privacy Policy</string>
     <string-array name="Gender">
         <item>Female</item>
         <item>Male</item>

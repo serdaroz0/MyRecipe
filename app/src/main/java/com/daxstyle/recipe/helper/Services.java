@@ -18,7 +18,7 @@ import org.json.JSONObject;
 import static android.content.ContentValues.TAG;
 
 public class Services {
-    private static final String REST_SERVICE = "http://culinaryapi.daxstyle.com/";
+    private static final String REST_SERVICE = "https://daxstyle.com";
     private Context mContext;
     private static Services mInstance = new Services();
     private static int mWaitingRequestCount = 0;

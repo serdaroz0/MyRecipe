@@ -2,13 +2,14 @@ package com.daxstyle.recipe.activity;
 
 import android.content.Intent;
 import android.icu.text.SimpleDateFormat;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.daxstyle.recipe.R;
 import com.daxstyle.recipe.helper.Services;
@@ -22,6 +23,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText edtName, edtSurname, edtPhoneNumber, edtEmail;
     boolean previouslyStarted;
     String currentDateandTime;
+    TextView tvPrivacy;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +36,7 @@ public class LoginActivity extends AppCompatActivity {
         spnBirthDate3 = findViewById(R.id.spnBirthDate3);
         edtSurname = findViewById(R.id.edtSurname);
         edtPhoneNumber = findViewById(R.id.edtPhoneNumber);
+        tvPrivacy = findViewById(R.id.tvPrivacy);
         edtEmail = findViewById(R.id.edtEmail);
         Util.setSoftKeys(this);
 //        Locale locale3 = new Locale("tr");
@@ -84,18 +87,21 @@ public class LoginActivity extends AppCompatActivity {
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
                 sdf = new SimpleDateFormat("yyyy/MM/dd-HH:mm:ss");
                 currentDateandTime = sdf.format(new Date());
-                Log.d("save: ", currentDateandTime);
             }
             Services.getInstance().sendPost(this, edtSurname.getText().toString(), birthDate, spnGender.getSelectedItem().toString(), edtEmail.getText().toString(), edtPhoneNumber.getText().toString(), currentDateandTime, edtName.getText().toString(), new Services.OnFinishListener() {
                 @Override
                 public void onFinish(Object obj) {
 //              Result result = (Result) obj;
-                    Log.d("onFinish: ", String.valueOf(obj));
                 }
             }, true);
             Util.setPrefBoolean(this, "firstTime", true);
             startActivity(intent);
         }
+    }
+
+    public void privacy(View view) {
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://sites.google.com/view/daxstyle/home"));
+        startActivity(browserIntent);
     }
 
 //    public void loadLocale() {

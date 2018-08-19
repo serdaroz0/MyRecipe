@@ -11,7 +11,9 @@ import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -97,16 +99,12 @@ public class CulinaryActivity extends AppCompatActivity {
                 if (photo != null) {
                     iwNumber.setImageBitmap(photo);
                     iwNumber.setScaleType(ImageView.ScaleType.FIT_XY);
-
                 }
-
-                Log.d("onCreate: ", imagesUri.get(i));
             }
             Util.getPrefInt(this, "count");
         }
 
     }
-
     public void spnAdapter() {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.Numbers, android.R.layout.simple_spinner_item);
@@ -115,14 +113,10 @@ public class CulinaryActivity extends AppCompatActivity {
         spnTime2.setAdapter(adapter);
 
     }
-
     public void addPhoto(View view) {
         tag = Integer.parseInt(view.getTag().toString());
         verifyPermissions();
-
-
     }
-
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         String stringUri;
         ImageView ivNumber = findViewById(getResources().getIdentifier("ivReport" + tag, "id", this.getPackageName()));
@@ -164,10 +158,7 @@ public class CulinaryActivity extends AppCompatActivity {
         }
 
     }
-
-
     public void saveAll(View view) {
-
         if (getIntent().getBooleanExtra("fromEdit", false)) {
             cardModels.get(position).setDirection(etDirection.getText().toString());
             cardModels.get(position).setIngredient(etIngredient.getText().toString());
@@ -178,7 +169,6 @@ public class CulinaryActivity extends AppCompatActivity {
             Util.saveObject(this, imagesUri, "Uri.obj");
             Util.saveObject(this, cardModels, "CardModels.obj");
             Util.showToast(this, R.string.saved);
-
         } else {
             if (etDirection.getText() != null && etIngredient.getText() != null && etTitle.getText() != null) {
                 Util.loadCards(this, cardModels);
@@ -199,8 +189,6 @@ public class CulinaryActivity extends AppCompatActivity {
         }
         startActivity(new Intent(this, MainActivity.class));
     }
-
-
     private void verifyPermissions() {
         if (!hasAllPermissions()) {
             // We don't have permission so prompt the user
@@ -211,7 +199,6 @@ public class CulinaryActivity extends AppCompatActivity {
             );
         }
     }
-
     private boolean hasAllPermissions() {
         // Check if we have all required permissions.
         for (String perm : requiredPermissions) {
@@ -225,7 +212,6 @@ public class CulinaryActivity extends AppCompatActivity {
                 .start(this);
         return true;
     }
-
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
@@ -239,7 +225,6 @@ public class CulinaryActivity extends AppCompatActivity {
             }
         }
     }
-
     static {
         List<String> perms = new ArrayList<>(Arrays.asList(
                 Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -247,7 +232,6 @@ public class CulinaryActivity extends AppCompatActivity {
         ));
         requiredPermissions = perms.toArray(new String[perms.size()]);
     }
-
 }
 
 

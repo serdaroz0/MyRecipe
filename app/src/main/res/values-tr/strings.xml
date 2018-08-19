@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Yemek Tariflerim</string>
+    <string name="app_name">Yemek Tarifim</string>
     <string name="whatsapp_message">Telefonunuzda whatsapp uygulaması yüklü değildir.</string>
     <string name="name">İsim</string>
     <string name="surname">Soyisim</string>
@@ -39,6 +39,7 @@
     <string name="data_not_found">Data not found</string>
     <string name="example_number">(555) 555 55 55</string>
     <string name="error_desc">Lütfen en az bir alanı doldurunuz.</string>
+    <string name="privacy_policy">Kullanıcı gizlilik sözleşmesi</string>
 
     <string-array name="Gender">
         <item>Kadın</item>

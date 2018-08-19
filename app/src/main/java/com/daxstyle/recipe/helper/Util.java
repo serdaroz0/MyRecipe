@@ -7,8 +7,8 @@ import android.os.Environment;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.daxstyle.recipe.model.CardModel;
 import com.daxstyle.recipe.R;
+import com.daxstyle.recipe.model.CardModel;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -25,7 +25,6 @@ public class Util {
 
     private static void showToast(Context context, String message) {
         Toast t = Toast.makeText(context, message, Toast.LENGTH_SHORT);
-        //t.setGravity(Gravity.CENTER, 0, 0);
         t.show();
     }
 
@@ -166,7 +165,6 @@ public class Util {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-
     }
 
     public static ArrayList<CardModel> loadCards(Context context, ArrayList<CardModel> cardModels) {
@@ -196,34 +194,4 @@ public class Util {
         }
         return cardModels;
     }
-//    public static void saveProfilePhoto(Context context, Bitmap bitmap) {
-//        FileOutputStream out = null;
-//        try {
-//            String path = context.getFilesDir() + "/profile.png";
-//            out = new FileOutputStream(path);
-//            bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        } finally {
-//            try {
-//                if (out != null) {
-//                    out.close();
-//                }
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//    }
-//    public static Bitmap getProfilePhoto(Context context) {
-//        try {
-//            BitmapFactory.Options options = new BitmapFactory.Options();
-//            options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-//            String path = context.getFilesDir() + "/profile.png";
-//            Bitmap bitmap = BitmapFactory.decodeFile(path, options);
-//            return bitmap;
-//        } catch (Exception ex) {
-//            ex.printStackTrace();
-//            return null;
-//        }
-//    }
 }
