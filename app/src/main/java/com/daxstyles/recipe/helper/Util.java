@@ -1,4 +1,4 @@
-package com.daxstyle.recipe.helper;
+package com.daxstyles.recipe.helper;
 
 import android.app.Activity;
 import android.content.Context;
@@ -7,8 +7,8 @@ import android.os.Environment;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.daxstyle.recipe.R;
-import com.daxstyle.recipe.model.CardModel;
+import com.daxstyles.recipe.R;
+import com.daxstyles.recipe.model.CardModel;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

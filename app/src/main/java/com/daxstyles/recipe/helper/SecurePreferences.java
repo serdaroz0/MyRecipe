@@ -1,4 +1,4 @@
-package com.daxstyle.recipe.helper;
+package com.daxstyles.recipe.helper;
 
 /*
 Copyright (C) 2012 Sveinung Kval Bakken, sveinung.bakken@gmail.com

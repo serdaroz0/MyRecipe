@@ -1,4 +1,4 @@
-package com.daxstyle.recipe;
+package com.daxstyles.recipe;
 
 import org.junit.Test;
 

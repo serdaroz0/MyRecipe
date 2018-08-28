@@ -1,4 +1,4 @@
-package com.daxstyle.recipe.activity;
+package com.daxstyles.recipe.activity;
 
 import android.content.Intent;
 import android.icu.text.SimpleDateFormat;
@@ -14,10 +14,10 @@ import android.widget.TextView;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.daxstyle.recipe.R;
-import com.daxstyle.recipe.helper.Services;
-import com.daxstyle.recipe.helper.Util;
-import com.daxstyle.recipe.model.ResultModel;
+import com.daxstyles.recipe.R;
+import com.daxstyles.recipe.helper.Services;
+import com.daxstyles.recipe.helper.Util;
+import com.daxstyles.recipe.model.ResultModel;
 
 import java.util.Date;
 

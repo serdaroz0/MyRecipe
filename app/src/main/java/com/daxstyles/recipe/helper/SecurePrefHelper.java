@@ -1,4 +1,4 @@
-package com.daxstyle.recipe.helper;
+package com.daxstyles.recipe.helper;
 
 import android.content.Context;
 

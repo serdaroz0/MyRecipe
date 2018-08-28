@@ -1,4 +1,4 @@
-package com.daxstyle.recipe.adapter;
+package com.daxstyles.recipe.adapter;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -20,10 +20,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.daxstyle.recipe.activity.CulinaryActivity;
-import com.daxstyle.recipe.helper.Util;
-import com.daxstyle.recipe.model.CardModel;
-import com.daxstyle.recipe.R;
+import com.daxstyles.recipe.activity.CulinaryActivity;
+import com.daxstyles.recipe.helper.Util;
+import com.daxstyles.recipe.model.CardModel;
+import com.daxstyles.recipe.R;
 
 import java.io.IOException;
 import java.util.ArrayList;

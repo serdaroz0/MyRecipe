@@ -1,4 +1,4 @@
-package com.daxstyle.recipe.helper;
+package com.daxstyles.recipe.helper;
 
 import android.content.Context;
 import android.util.Log;
@@ -14,8 +14,8 @@ import com.android.volley.ServerError;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
-import com.daxstyle.recipe.R;
-import com.daxstyle.recipe.model.ResultModel;
+import com.daxstyles.recipe.R;
+import com.daxstyles.recipe.model.ResultModel;
 
 import org.json.JSONObject;
 

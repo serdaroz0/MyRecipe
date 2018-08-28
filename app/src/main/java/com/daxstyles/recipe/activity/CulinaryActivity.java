@@ -1,4 +1,4 @@
-package com.daxstyle.recipe.activity;
+package com.daxstyles.recipe.activity;
 
 import android.Manifest;
 import android.content.Intent;
@@ -17,9 +17,9 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.daxstyle.recipe.R;
-import com.daxstyle.recipe.helper.Util;
-import com.daxstyle.recipe.model.CardModel;
+import com.daxstyles.recipe.R;
+import com.daxstyles.recipe.helper.Util;
+import com.daxstyles.recipe.model.CardModel;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 

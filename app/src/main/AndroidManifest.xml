@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.daxstyle.recipe">
+    package="com.daxstyles.recipe">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -20,18 +20,18 @@
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
         <activity
-            android:name="com.daxstyle.recipe.activity.MainActivity"
+            android:name="com.daxstyles.recipe.activity.MainActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.daxstyle.recipe.activity.LoginActivity"
+            android:name="com.daxstyles.recipe.activity.LoginActivity"
             android:screenOrientation="portrait">
 
         </activity>
         <activity
-            android:name="com.daxstyle.recipe.activity.CulinaryActivity"
+            android:name="com.daxstyles.recipe.activity.CulinaryActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.daxstyle.recipe.activity.SplashActivity"
+            android:name="com.daxstyles.recipe.activity.SplashActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
             android:screenOrientation="portrait">
             <intent-filter>

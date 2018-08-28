@@ -1,4 +1,4 @@
-package com.daxstyle.recipe.activity;
+package com.daxstyles.recipe.activity;
 
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -11,10 +11,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.daxstyle.recipe.adapter.MyAdapter;
-import com.daxstyle.recipe.helper.Util;
-import com.daxstyle.recipe.model.CardModel;
-import com.daxstyle.recipe.R;
+import com.daxstyles.recipe.adapter.MyAdapter;
+import com.daxstyles.recipe.helper.Util;
+import com.daxstyles.recipe.model.CardModel;
+import com.daxstyles.recipe.R;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package com.daxstyle.recipe.model;
+package com.daxstyles.recipe.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package com.daxstyle.recipe;
+package com.daxstyles.recipe;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

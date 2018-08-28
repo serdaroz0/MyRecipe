@@ -1,12 +1,12 @@
-package com.daxstyle.recipe.activity;
+package com.daxstyles.recipe.activity;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
-import com.daxstyle.recipe.R;
-import com.daxstyle.recipe.helper.Util;
+import com.daxstyles.recipe.R;
+import com.daxstyles.recipe.helper.Util;
 
 public class SplashActivity extends Activity {
 
