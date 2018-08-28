@@ -36,10 +36,12 @@
     <string name="delete">Silmek istediğinize emin misiniz?</string>
     <string name="Yes">Evet</string>
     <string name="No">Hayır</string>
-    <string name="data_not_found">Data not found</string>
+    <string name="data_not_found">Veri Bulunamadı</string>
     <string name="example_number">(555) 555 55 55</string>
     <string name="error_desc">Lütfen en az bir alanı doldurunuz.</string>
     <string name="privacy_policy">Kullanıcı gizlilik sözleşmesi</string>
+    <string name="message_for_title">Lütfen tarifinizi yazınız.</string>
+    <string name="not_saved">Bir problem oluştu</string>
 
     <string-array name="Gender">
         <item>Kadın</item>

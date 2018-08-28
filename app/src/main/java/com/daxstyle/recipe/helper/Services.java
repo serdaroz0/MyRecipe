@@ -3,17 +3,23 @@ package com.daxstyle.recipe.helper;
 import android.content.Context;
 import android.util.Log;
 
+import com.android.volley.ClientError;
 import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.RetryPolicy;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.daxstyle.recipe.R;
+import com.daxstyle.recipe.model.ResultModel;
 
 import org.json.JSONObject;
+
+import javax.net.ssl.SSLContext;
 
 import static android.content.ContentValues.TAG;
 
@@ -56,25 +62,9 @@ public class Services {
         mWaitingRequestCount++;
     }
 
-    public Response.ErrorListener volleyErrorListener = new Response.ErrorListener() {
-        @Override
-        public void onErrorResponse(VolleyError error) {
-            try {
-                int message = R.string.data_not_found;
 
-                Util.showToast(mContext.getApplicationContext(), message);
-            } catch (
-                    Exception ex)
-
-            {
-                ex.printStackTrace();
-            }
-        }
-    };
-
-    public void sendPost(Context context, String surname, String birthDate, String gender, String emailAddress, String cellPhoneNumber, String insertDate, String name, OnFinishListener ofl, Boolean showErrors) {
+    public void sendPost(Context context, String surname, String birthDate, String gender, String emailAddress, String cellPhoneNumber, String insertDate, String name, OnFinishListener ofl, Response.ErrorListener errorListener) {
         mContext = context;
-
         JSONObject jsonObject = new JSONObject();
         JSONObject jsonBody = new JSONObject();
         try {
@@ -91,16 +81,11 @@ public class Services {
             Log.e("hata", e.toString());
             e.printStackTrace();
         }
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, REST_SERVICE, jsonObject, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                ofl.onFinish(response);
-
-            }
-        }, showErrors ? volleyErrorListener : null);
+        GsonRequest<ResultModel> gsonRequest = new GsonRequest<>(Request.Method.POST,
+                REST_SERVICE + "/", ResultModel.class, jsonObject, null, ofl::onFinish, errorListener);
 
 
-        add(request);
+        add(gsonRequest);
     }
 
 }

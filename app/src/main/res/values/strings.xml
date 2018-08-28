@@ -41,6 +41,8 @@
     <string name="example_number">(555) 555 55 55</string>
     <string name="error_desc">Please fill at least one field.</string>
     <string name="privacy_policy">Privacy Policy</string>
+    <string name="message_for_title">Please write some recipes.</string>
+    <string name="not_saved">There was a problem</string>
     <string-array name="Gender">
         <item>Female</item>
         <item>Male</item>

@@ -10,10 +10,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -105,6 +102,7 @@ public class CulinaryActivity extends AppCompatActivity {
         }
 
     }
+
     public void spnAdapter() {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.Numbers, android.R.layout.simple_spinner_item);
@@ -113,10 +111,12 @@ public class CulinaryActivity extends AppCompatActivity {
         spnTime2.setAdapter(adapter);
 
     }
+
     public void addPhoto(View view) {
         tag = Integer.parseInt(view.getTag().toString());
         verifyPermissions();
     }
+
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         String stringUri;
         ImageView ivNumber = findViewById(getResources().getIdentifier("ivReport" + tag, "id", this.getPackageName()));
@@ -158,19 +158,24 @@ public class CulinaryActivity extends AppCompatActivity {
         }
 
     }
+
     public void saveAll(View view) {
         if (getIntent().getBooleanExtra("fromEdit", false)) {
-            cardModels.get(position).setDirection(etDirection.getText().toString());
-            cardModels.get(position).setIngredient(etIngredient.getText().toString());
-            cardModels.get(position).setPrepTime(spnTime.getSelectedItemPosition());
-            cardModels.get(position).setServeTime(spnTime2.getSelectedItemPosition());
-            cardModels.get(position).setTitle(etTitle.getText().toString());
-            cardModels.get(position).setImagesUri(imagesUri);
-            Util.saveObject(this, imagesUri, "Uri.obj");
-            Util.saveObject(this, cardModels, "CardModels.obj");
-            Util.showToast(this, R.string.saved);
+            if (!etDirection.getText().toString().equals("") && !etTitle.getText().toString().equals("") && !etIngredient.getText().toString().equals("")) {
+                cardModels.get(position).setDirection(etDirection.getText().toString());
+                cardModels.get(position).setIngredient(etIngredient.getText().toString());
+                cardModels.get(position).setPrepTime(spnTime.getSelectedItemPosition());
+                cardModels.get(position).setServeTime(spnTime2.getSelectedItemPosition());
+                cardModels.get(position).setTitle(etTitle.getText().toString());
+                cardModels.get(position).setImagesUri(imagesUri);
+                Util.saveObject(this, imagesUri, "Uri.obj");
+                Util.saveObject(this, cardModels, "CardModels.obj");
+                Util.showToast(this, R.string.saved);
+            } else {
+                Util.showToast(this, R.string.message_for_title);
+            }
         } else {
-            if (etDirection.getText() != null && etIngredient.getText() != null && etTitle.getText() != null) {
+            if (!etDirection.getText().toString().equals("") && !etTitle.getText().toString().equals("") && !etIngredient.getText().toString().equals("")) {
                 Util.loadCards(this, cardModels);
                 CardModel cardModel = new CardModel();
                 cardModel.setDirection(etDirection.getText().toString());
@@ -184,11 +189,12 @@ public class CulinaryActivity extends AppCompatActivity {
                 Util.saveObject(this, cardModels, "CardModels.obj");
                 Util.showToast(this, R.string.saved);
             } else {
-                Util.showToast(this, R.string.error_desc);
+                Util.showToast(this, R.string.message_for_title);
             }
         }
         startActivity(new Intent(this, MainActivity.class));
     }
+
     private void verifyPermissions() {
         if (!hasAllPermissions()) {
             // We don't have permission so prompt the user
@@ -199,6 +205,7 @@ public class CulinaryActivity extends AppCompatActivity {
             );
         }
     }
+
     private boolean hasAllPermissions() {
         // Check if we have all required permissions.
         for (String perm : requiredPermissions) {
@@ -212,6 +219,7 @@ public class CulinaryActivity extends AppCompatActivity {
                 .start(this);
         return true;
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
@@ -225,6 +233,7 @@ public class CulinaryActivity extends AppCompatActivity {
             }
         }
     }
+
     static {
         List<String> perms = new ArrayList<>(Arrays.asList(
                 Manifest.permission.READ_EXTERNAL_STORAGE,

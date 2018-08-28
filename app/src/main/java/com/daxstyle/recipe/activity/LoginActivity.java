@@ -5,15 +5,19 @@ import android.icu.text.SimpleDateFormat;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.daxstyle.recipe.R;
 import com.daxstyle.recipe.helper.Services;
 import com.daxstyle.recipe.helper.Util;
+import com.daxstyle.recipe.model.ResultModel;
 
 import java.util.Date;
 
@@ -38,6 +42,7 @@ public class LoginActivity extends AppCompatActivity {
         edtPhoneNumber = findViewById(R.id.edtPhoneNumber);
         tvPrivacy = findViewById(R.id.tvPrivacy);
         edtEmail = findViewById(R.id.edtEmail);
+
         Util.setSoftKeys(this);
 //        Locale locale3 = new Locale("tr");
 //        Locale.setDefault(locale3);
@@ -81,7 +86,6 @@ public class LoginActivity extends AppCompatActivity {
             edtEmail.setError(getString(R.string.required_field));
 
         } else {
-            Util.showToast(this, R.string.saved_toast);
             Intent intent = new Intent(this, MainActivity.class);
             SimpleDateFormat sdf = null;
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
@@ -91,11 +95,24 @@ public class LoginActivity extends AppCompatActivity {
             Services.getInstance().sendPost(this, edtSurname.getText().toString(), birthDate, spnGender.getSelectedItem().toString(), edtEmail.getText().toString(), edtPhoneNumber.getText().toString(), currentDateandTime, edtName.getText().toString(), new Services.OnFinishListener() {
                 @Override
                 public void onFinish(Object obj) {
-//              Result result = (Result) obj;
+                    ResultModel resultModel = (ResultModel) obj;
+                    if (resultModel.getCode() == 0) {
+                        Util.setPrefBoolean(LoginActivity.this, "firstTime", true);
+                        Util.showToast(LoginActivity.this, R.string.saved_toast);
+                        startActivity(intent);
+
+                    } else {
+                        Util.showToast(LoginActivity.this, R.string.not_saved);
+                    }
                 }
-            }, true);
-            Util.setPrefBoolean(this, "firstTime", true);
-            startActivity(intent);
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Util.showToast(LoginActivity.this, R.string.not_saved);
+
+                }
+            });
+
         }
     }
 
