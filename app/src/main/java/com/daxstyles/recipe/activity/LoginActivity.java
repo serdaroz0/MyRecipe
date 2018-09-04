@@ -3,14 +3,18 @@ package com.daxstyles.recipe.activity;
 import android.content.Intent;
 import android.icu.text.SimpleDateFormat;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -88,7 +92,8 @@ public class LoginActivity extends AppCompatActivity {
         } else {
             Intent intent = new Intent(this, MainActivity.class);
             SimpleDateFormat sdf = null;
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 sdf = new SimpleDateFormat("yyyy/MM/dd-HH:mm:ss");
                 currentDateandTime = sdf.format(new Date());
             }

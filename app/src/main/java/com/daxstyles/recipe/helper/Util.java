@@ -1,10 +1,15 @@
 package com.daxstyles.recipe.helper;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Color;
+import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Environment;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.daxstyles.recipe.R;
@@ -80,6 +85,18 @@ public class Util {
         setPrefString(c, s, Float.toString(val));
     }
 
+    public static ProgressDialog createProgressDialog(Context context) {
+        ProgressDialog progressDialog = new ProgressDialog(context);
+        progressDialog.setCancelable(true);
+        progressDialog.setCanceledOnTouchOutside(false);
+        //progressDialog.setContentView(R.layout.progress_dialog);
+        return progressDialog;
+    }
+    public static void startProgressAnimation(ProgressDialog pd) {
+        pd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        AnimationDrawable ad = (AnimationDrawable) ((ImageView) pd.findViewById(R.id.ivLoading)).getBackground();
+        ad.start();
+    }
     //endregion
     public static void saveObject(Context context, Object obj, String fileName) {
         if (checkExternalStorage()) {

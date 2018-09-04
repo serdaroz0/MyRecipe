@@ -42,6 +42,7 @@
     <string name="privacy_policy">Kullanıcı gizlilik sözleşmesi</string>
     <string name="message_for_title">Lütfen tarifinizi yazınız.</string>
     <string name="not_saved">Bir problem oluştu</string>
+    <string name="loading">Yükleniyor</string>
 
     <string-array name="Gender">
         <item>Kadın</item>

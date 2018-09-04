@@ -43,6 +43,7 @@
     <string name="privacy_policy">Privacy Policy</string>
     <string name="message_for_title">Please write some recipes.</string>
     <string name="not_saved">There was a problem</string>
+    <string name="loading">Loading</string>
     <string-array name="Gender">
         <item>Female</item>
         <item>Male</item>

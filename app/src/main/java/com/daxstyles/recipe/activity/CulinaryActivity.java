@@ -175,7 +175,7 @@ public class CulinaryActivity extends AppCompatActivity {
                 Util.showToast(this, R.string.message_for_title);
             }
         } else {
-            if (!etDirection.getText().toString().equals("") && !etTitle.getText().toString().equals("") && !etIngredient.getText().toString().equals("")) {
+            if (!etDirection.getText().toString().equals("") || !etTitle.getText().toString().equals("") || !etIngredient.getText().toString().equals("")) {
                 Util.loadCards(this, cardModels);
                 CardModel cardModel = new CardModel();
                 cardModel.setDirection(etDirection.getText().toString());

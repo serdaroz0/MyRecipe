@@ -6,17 +6,22 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.daxstyles.recipe.R;
 import com.daxstyles.recipe.adapter.MyAdapter;
 import com.daxstyles.recipe.helper.Util;
 import com.daxstyles.recipe.model.CardModel;
-import com.daxstyles.recipe.R;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
     ArrayList<CardModel> cardModels = null;
@@ -41,12 +46,29 @@ public class MainActivity extends AppCompatActivity {
             tvNoNote.setVisibility(View.VISIBLE);
         }
 
-        mRecyclerView.setHasFixedSize(true);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        RecyclerView.Adapter mAdapter = new MyAdapter(cardModels, this);
-        mRecyclerView.setAdapter(mAdapter);
+            mRecyclerView.setHasFixedSize(true);
+            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
+            mRecyclerView.setLayoutManager(mLayoutManager);
+            RecyclerView.Adapter mAdapter = new MyAdapter(cardModels, this);
+            mRecyclerView.setAdapter(mAdapter);
+        Date currentDate = new Date(System.currentTimeMillis());
+        String dateStr = "04/05/2010";
 
+        SimpleDateFormat curFormater = new SimpleDateFormat("dd/MM/yyyy");
+        Date dateObj = null;
+        try {
+            dateObj = curFormater.parse(dateStr);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+
+        long c = Calendar.getInstance().getTimeInMillis();
+        System.out.println("Current time => " + c);
+
+        SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
+        String formattedDate = df.format(c);
+        Log.d("onCreate1234: ", formattedDate);
     }
 
     public boolean onKeyDown(int keyCode, KeyEvent event) {

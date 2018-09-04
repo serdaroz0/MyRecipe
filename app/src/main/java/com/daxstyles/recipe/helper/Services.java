@@ -1,25 +1,20 @@
 package com.daxstyles.recipe.helper;
 
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.util.Log;
 
-import com.android.volley.ClientError;
 import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.RetryPolicy;
-import com.android.volley.ServerError;
-import com.android.volley.TimeoutError;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 import com.daxstyles.recipe.R;
 import com.daxstyles.recipe.model.ResultModel;
 
 import org.json.JSONObject;
-
-import javax.net.ssl.SSLContext;
 
 import static android.content.ContentValues.TAG;
 
@@ -30,6 +25,7 @@ public class Services {
     private static int mWaitingRequestCount = 0;
     private RetryPolicy timeoutPolicy = new DefaultRetryPolicy(30000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
     private RequestQueue mRequestQueue;
+    private ProgressDialog progressDialog;
 
 
     public static synchronized Services getInstance() {
@@ -39,6 +35,37 @@ public class Services {
     public interface OnFinishListener {
         public void onFinish(Object obj);
     }
+
+
+    private void showProgress(Context context) {
+        mContext = context;
+        if (progressDialog == null) {
+            createProgress();
+        } else {
+            if (!progressDialog.getContext().getClass().equals(mContext.getClass())) {
+                progressDialog.dismiss();
+                createProgress();
+            } else progressDialog.show();
+        }
+        Util.startProgressAnimation(progressDialog);
+    }
+
+    private void createProgress() {
+        progressDialog = Util.createProgressDialog(mContext);
+        progressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                cancelAllRequests();
+            }
+        });
+        progressDialog.show();
+        progressDialog.setContentView(R.layout.progress_dialog);
+    }
+
+    public void cancelAllRequests() {
+        mRequestQueue.cancelAll(TAG);
+    }
+
 
     private RequestQueue.RequestFinishedListener<Object> mRequestFinishedListener = new RequestQueue.RequestFinishedListener<Object>() {
         @Override
@@ -64,7 +91,7 @@ public class Services {
 
 
     public void sendPost(Context context, String surname, String birthDate, String gender, String emailAddress, String cellPhoneNumber, String insertDate, String name, OnFinishListener ofl, Response.ErrorListener errorListener) {
-        mContext = context;
+        showProgress(context);
         JSONObject jsonObject = new JSONObject();
         JSONObject jsonBody = new JSONObject();
         try {
