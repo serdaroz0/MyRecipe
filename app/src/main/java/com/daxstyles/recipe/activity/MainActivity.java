@@ -1,5 +1,6 @@
 package com.daxstyles.recipe.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -41,20 +42,20 @@ public class MainActivity extends AppCompatActivity {
         tvCulinary.setTypeface(type);
         ivImage = findViewById(R.id.ivImage);
         Util.setSoftKeys(this);
-        cardModels = Util.loadCards(this, cardModels);
+        cardModels = Util.loadCards(this);
         if (cardModels.size() < 1) {
             tvNoNote.setVisibility(View.VISIBLE);
         }
 
-            mRecyclerView.setHasFixedSize(true);
-            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
-            mRecyclerView.setLayoutManager(mLayoutManager);
-            RecyclerView.Adapter mAdapter = new MyAdapter(cardModels, this);
-            mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.setHasFixedSize(true);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        RecyclerView.Adapter mAdapter = new MyAdapter(cardModels, this);
+        mRecyclerView.setAdapter(mAdapter);
         Date currentDate = new Date(System.currentTimeMillis());
         String dateStr = "04/05/2010";
 
-        SimpleDateFormat curFormater = new SimpleDateFormat("dd/MM/yyyy");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat curFormater = new SimpleDateFormat("dd/MM/yyyy");
         Date dateObj = null;
         try {
             dateObj = curFormater.parse(dateStr);
@@ -66,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         long c = Calendar.getInstance().getTimeInMillis();
         System.out.println("Current time => " + c);
 
-        SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
         String formattedDate = df.format(c);
         Log.d("onCreate1234: ", formattedDate);
     }

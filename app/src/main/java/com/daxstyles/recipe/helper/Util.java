@@ -92,11 +92,13 @@ public class Util {
         //progressDialog.setContentView(R.layout.progress_dialog);
         return progressDialog;
     }
+
     public static void startProgressAnimation(ProgressDialog pd) {
         pd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         AnimationDrawable ad = (AnimationDrawable) ((ImageView) pd.findViewById(R.id.ivLoading)).getBackground();
         ad.start();
     }
+
     //endregion
     public static void saveObject(Context context, Object obj, String fileName) {
         if (checkExternalStorage()) {
@@ -163,8 +165,7 @@ public class Util {
 
     public static boolean hasNavigationBar(Context context) {
         Resources resources = context.getResources();
-        int hasNavBarId = resources.getIdentifier("config_showNavigationBar",
-                "bool", "android");
+        int hasNavBarId = resources.getIdentifier("config_showNavigationBar", "bool", "android");
         return hasNavBarId > 0 && resources.getBoolean(hasNavBarId);
     }
 
@@ -184,8 +185,8 @@ public class Util {
         }
     }
 
-    public static ArrayList<CardModel> loadCards(Context context, ArrayList<CardModel> cardModels) {
-        cardModels = new ArrayList<>();
+    public static ArrayList<CardModel> loadCards(Context context) {
+        ArrayList<CardModel> cardModels = new ArrayList<>();
 
         try {
             Object cards = Util.loadObject(context, "CardModels.obj");
@@ -198,8 +199,8 @@ public class Util {
         return cardModels;
     }
 
-    public static ArrayList<String> loadUri(Context context, ArrayList<String> cardModels) {
-        cardModels = new ArrayList<>();
+    public static ArrayList<String> loadUri(Context context) {
+        ArrayList<String> cardModels = new ArrayList<>();
 
         try {
             Object cards = Util.loadObject(context, "Uri.obj");

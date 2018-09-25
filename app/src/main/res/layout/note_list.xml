@@ -37,7 +37,8 @@
                 android:layout_height="match_parent"
                 android:contentDescription="@+id/newNote"
                 android:onClick="newNote"
-                android:paddingLeft="10dp"
+                android:paddingEnd="0dp"
+                android:paddingStart="10dp"
                 android:src="@drawable/ic_newnote" />
         </LinearLayout>
 

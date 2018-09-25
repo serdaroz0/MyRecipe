@@ -32,7 +32,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:onClick="saveAll"
-                    android:paddingLeft="15dp"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="0dp"
                     android:src="@drawable/ic_back" />
 
                 <EditText
@@ -51,7 +52,7 @@
                     android:textAlignment="textStart"
                     android:textColor="@color/white"
                     android:textColorHint="@color/gray"
-                    android:textSize="22dp" />
+                    android:textSize="22sp" />
 
             </LinearLayout>
         </android.support.v7.widget.CardView>

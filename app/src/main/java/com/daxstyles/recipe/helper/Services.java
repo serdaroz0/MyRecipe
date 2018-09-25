@@ -33,7 +33,7 @@ public class Services {
     }
 
     public interface OnFinishListener {
-        public void onFinish(Object obj);
+        void onFinish(Object obj);
     }
 
 
@@ -45,7 +45,8 @@ public class Services {
             if (!progressDialog.getContext().getClass().equals(mContext.getClass())) {
                 progressDialog.dismiss();
                 createProgress();
-            } else progressDialog.show();
+            } else
+                progressDialog.show();
         }
         Util.startProgressAnimation(progressDialog);
     }
@@ -108,8 +109,7 @@ public class Services {
             Log.e("hata", e.toString());
             e.printStackTrace();
         }
-        GsonRequest<ResultModel> gsonRequest = new GsonRequest<>(Request.Method.POST,
-                REST_SERVICE + "/", ResultModel.class, jsonObject, null, ofl::onFinish, errorListener);
+        GsonRequest<ResultModel> gsonRequest = new GsonRequest<>(Request.Method.POST, REST_SERVICE + "/", ResultModel.class, jsonObject, null, ofl::onFinish, errorListener);
 
 
         add(gsonRequest);

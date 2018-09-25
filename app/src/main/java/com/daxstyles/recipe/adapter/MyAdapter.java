@@ -1,5 +1,6 @@
 package com.daxstyles.recipe.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -61,7 +62,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         CardModel dp = cardModels.get(position);
         holder.tvTitle.setText(dp.getTitle());
         if (cardModels.get(position).getImagesUri().size() != 0) {
@@ -115,7 +116,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             if (cardModels.get(position) != null) {
-                                cardModels = Util.loadCards(context, cardModels);
+                                cardModels = Util.loadCards(context);
                                 cardModels.remove(position);
                                 Util.saveObject(context, cardModels, "CardModels.obj");
                                 notifyDataSetChanged();
@@ -175,8 +176,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
                     StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
                     StrictMode.setVmPolicy(builder.build());
                     context.startActivity(Intent.createChooser(emailIntent, context.getText(R.string.send_mail)));
-
-
                 }
             });
             builder.show();

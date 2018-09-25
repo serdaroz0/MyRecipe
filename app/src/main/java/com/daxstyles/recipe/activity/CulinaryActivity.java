@@ -66,11 +66,11 @@ public class CulinaryActivity extends AppCompatActivity {
         if (imagesUri == null) {
             imagesUri = new ArrayList<>();
         } else {
-            imagesUri = Util.loadUri(this, imagesUri);
+            imagesUri = Util.loadUri(this);
         }
         Util.setSoftKeys(this);
         spnAdapter();
-        cardModels = Util.loadCards(this, cardModels);
+        cardModels = Util.loadCards(this);
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             position = extras.getInt("count");
@@ -80,6 +80,7 @@ public class CulinaryActivity extends AppCompatActivity {
             spnTime.setSelection(extras.getInt("prepTime"));
             spnTime2.setSelection(extras.getInt("serveTime"));
             imagesUri = (ArrayList<String>) extras.getSerializable("uris");
+            assert imagesUri != null;
             for (int i = 0; i < imagesUri.size(); i++) {
                 Uri uri = Uri.parse(imagesUri.get(i));
                 Bitmap photo = null;
@@ -104,8 +105,7 @@ public class CulinaryActivity extends AppCompatActivity {
     }
 
     public void spnAdapter() {
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.Numbers, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.Numbers, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnTime.setAdapter(adapter);
         spnTime2.setAdapter(adapter);
@@ -126,9 +126,9 @@ public class CulinaryActivity extends AppCompatActivity {
             public void onClick(View v) {
                 imagesUri.remove(ivNumber.getTag());
                 ivNumber.setClickable(true);
-//                if (tag == 1) {
-//                    ivNumber.setImageResource(R.drawable.ic_camera);
-//                } else {
+                //                if (tag == 1) {
+                //                    ivNumber.setImageResource(R.drawable.ic_camera);
+                //                } else {
                 ivNumber.setImageResource(R.drawable.ic_addimage);
                 tvNumber.setVisibility(View.GONE);
             }
@@ -176,7 +176,7 @@ public class CulinaryActivity extends AppCompatActivity {
             }
         } else {
             if (!etDirection.getText().toString().equals("") || !etTitle.getText().toString().equals("") || !etIngredient.getText().toString().equals("")) {
-                Util.loadCards(this, cardModels);
+                Util.loadCards(this);
                 CardModel cardModel = new CardModel();
                 cardModel.setDirection(etDirection.getText().toString());
                 cardModel.setIngredient(etIngredient.getText().toString());
@@ -198,11 +198,7 @@ public class CulinaryActivity extends AppCompatActivity {
     private void verifyPermissions() {
         if (!hasAllPermissions()) {
             // We don't have permission so prompt the user
-            ActivityCompat.requestPermissions(
-                    this,
-                    requiredPermissions,
-                    PERMISSION_REQUEST
-            );
+            ActivityCompat.requestPermissions(this, requiredPermissions, PERMISSION_REQUEST);
         }
     }
 
@@ -214,9 +210,7 @@ public class CulinaryActivity extends AppCompatActivity {
             }
 
         }
-        CropImage.activity()
-                .setGuidelines(CropImageView.Guidelines.ON)
-                .start(this);
+        CropImage.activity().setGuidelines(CropImageView.Guidelines.ON).start(this);
         return true;
     }
 
@@ -235,10 +229,7 @@ public class CulinaryActivity extends AppCompatActivity {
     }
 
     static {
-        List<String> perms = new ArrayList<>(Arrays.asList(
-                Manifest.permission.READ_EXTERNAL_STORAGE,
-                Manifest.permission.CAMERA
-        ));
+        List<String> perms = new ArrayList<>(Arrays.asList(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.CAMERA));
         requiredPermissions = perms.toArray(new String[perms.size()]);
     }
 }
