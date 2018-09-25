@@ -12,7 +12,6 @@ import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,11 +19,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.daxstyles.recipe.R;
 import com.daxstyles.recipe.activity.CulinaryActivity;
 import com.daxstyles.recipe.helper.Util;
 import com.daxstyles.recipe.model.CardModel;
-import com.daxstyles.recipe.R;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -55,8 +55,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     @NonNull
     @Override
     public MyAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.listview, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.listview, parent, false);
         ViewHolder vh = new ViewHolder(v);
         return vh;
     }
@@ -75,8 +74,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             }
             holder.ivTitle.setImageBitmap(photo);
         }
-        holder.ivTitle.setOnClickListener(view ->
-        {
+        holder.ivTitle.setOnClickListener(view -> {
             Intent culinaryIntent = new Intent(context, CulinaryActivity.class);
             culinaryIntent.putExtra("count", position);
             culinaryIntent.putExtra("title", cardModels.get(position).getTitle());
@@ -101,8 +99,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             context.startActivity(culinaryIntent);
         });
 
-        holder.btnDelete.setOnClickListener(view ->
-        {
+        holder.btnDelete.setOnClickListener(view -> {
 
             android.app.AlertDialog.Builder builder;
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -110,23 +107,21 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             } else {
                 builder = new android.app.AlertDialog.Builder(context);
             }
-            builder.setTitle(R.string.delete)
-                    .setPositiveButton(R.string.No, new DialogInterface.OnClickListener() {
+            builder.setTitle(R.string.delete).setPositiveButton(R.string.No, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                }
+            }).
+                    setNegativeButton(R.string.Yes, new DialogInterface.OnClickListener() {
+                        @Override
                         public void onClick(DialogInterface dialog, int which) {
+                            if (cardModels.get(position) != null) {
+                                cardModels = Util.loadCards(context, cardModels);
+                                cardModels.remove(position);
+                                Util.saveObject(context, cardModels, "CardModels.obj");
+                                notifyDataSetChanged();
+                            }
                         }
-                    })
-                    .
-                            setNegativeButton(R.string.Yes, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    if (cardModels.get(position) != null) {
-                                        cardModels = Util.loadCards(context, cardModels);
-                                        cardModels.remove(position);
-                                        Util.saveObject(context, cardModels, "CardModels.obj");
-                                        notifyDataSetChanged();
-                                    }
-                                }
-                            });
+                    });
             builder.show();
 
         });
@@ -142,53 +137,48 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             } else {
                 builder = new android.app.AlertDialog.Builder(context);
             }
-            builder.setTitle(R.string.choose)
-                    .setPositiveButton(R.string.whatsapp, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            PackageManager pm = context.getPackageManager();
-                            try {
+            builder.setTitle(R.string.choose).setPositiveButton(R.string.whatsapp, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    PackageManager pm = context.getPackageManager();
+                    try {
+                        Intent waIntent = new Intent(Intent.ACTION_SEND);
+                        waIntent.setType("text/plain");
+                        String mailText = "Başlık : " + cardModels.get(position).getTitle() + "\nHazırlanma süresi : " + cardModels.get(position).getPrepTime() + " dk" + "\nServis Süresi : " + cardModels.get(position).getServeTime() + " dk" + "\nMalzemeler : " + cardModels.get(position).getIngredient() + "\nHazırlanışı : " + cardModels.get(position).getDirection();
+                        PackageInfo info = pm.getPackageInfo("com.whatsapp", PackageManager.GET_META_DATA);
+                        //Check if package exists or not. If not then code
+                        //in catch block will be called
+                        waIntent.setPackage("com.whatsapp");
+                        waIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        waIntent.putExtra(Intent.EXTRA_TEXT, mailText);
+                        context.startActivity(Intent.createChooser(waIntent, context.getText(R.string.send_mail)));
 
-                                Intent waIntent = new Intent(Intent.ACTION_SEND);
-                                waIntent.setType("text/plain");
-                                String mailText = "Başlık : " + cardModels.get(position).getTitle() + "\nHazırlanma süresi : " + cardModels.get(position).getPrepTime() + " dk" + "\nServis Süresi : " + cardModels.get(position).getServeTime() + " dk" + "\nMalzemeler : " + cardModels.get(position).getIngredient() + "\nHazırlanışı : " + cardModels.get(position).getDirection();
-                                PackageInfo info = pm.getPackageInfo("com.whatsapp", PackageManager.GET_META_DATA);
-                                //Check if package exists or not. If not then code
-                                //in catch block will be called
-                                waIntent.setPackage("com.whatsapp");
-                                waIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                waIntent.putExtra(Intent.EXTRA_TEXT, mailText);
-                                context.startActivity(Intent.createChooser(waIntent, context.getText(R.string.send_mail)));
-
-                            } catch (PackageManager.NameNotFoundException e) {
-                                Toast.makeText(context, R.string.whatsapp_message, Toast.LENGTH_SHORT)
-                                        .show();
-                            }
-                        }
-                    })
-                    .setNegativeButton(R.string.gmail, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            Intent.makeMainSelectorActivity(Intent.ACTION_MAIN, Intent.CATEGORY_APP_EMAIL);
-                            Uri urit;
-                            String mailText = "Başlık : " + cardModels.get(position).getTitle() + "\nHazırlanma süresi : " + cardModels.get(position).getPrepTime() + " dk" + "\nServis Süresi : " + cardModels.get(position).getServeTime() + " dk" + "\nMalzemeler : " + cardModels.get(position).getIngredient() + "\nHazırlanışı : " + cardModels.get(position).getDirection();
-                            Intent emailIntent = new Intent(Intent.ACTION_SEND_MULTIPLE);
-                            emailIntent.setType("message/rfc822");
-                            emailIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                            emailIntent.putExtra(Intent.EXTRA_SUBJECT, cardModels.get(position).getTitle());
-                            for (int i = 0; i < cardModels.get(position).getImagesUri().size(); i++) {
-                                urit = Uri.parse(cardModels.get(position).getImagesUri().get(i));
-                                uri.add(urit);
-                            }
-                            if (uri != null) {
-                                emailIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uri);
-                            }
-                            emailIntent.putExtra(Intent.EXTRA_TEXT, mailText);
-                            StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
-                            StrictMode.setVmPolicy(builder.build());
-                            context.startActivity(Intent.createChooser(emailIntent, context.getText(R.string.send_mail)));
+                    } catch (PackageManager.NameNotFoundException e) {
+                        Toast.makeText(context, R.string.whatsapp_message, Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }).setNegativeButton(R.string.gmail, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    Intent.makeMainSelectorActivity(Intent.ACTION_MAIN, Intent.CATEGORY_APP_EMAIL);
+                    String mailText = "Başlık : " + cardModels.get(position).getTitle() + "\nHazırlanma süresi : " + cardModels.get(position).getPrepTime() + " dk" + "\nServis Süresi : " + cardModels.get(position).getServeTime() + " dk" + "\nMalzemeler : " + cardModels.get(position).getIngredient() + "\nHazırlanışı : " + cardModels.get(position).getDirection();
+                    Intent emailIntent = new Intent(Intent.ACTION_SEND_MULTIPLE);
+                    emailIntent.setType("message/rfc822");
+                    emailIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                    emailIntent.putExtra(Intent.EXTRA_SUBJECT, cardModels.get(position).getTitle());
+                    for (int i = 0; i < cardModels.get(position).getImagesUri().size(); i++) {
+                        File newFile = new File(cardModels.get(position).getImagesUri().get(i));
+                        uri.add(Uri.parse("content://com.daxstyles.recipe.fileprovider/cache/" + newFile.getName()));
+                    }
+                    if (uri != null) {
+                        emailIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uri);
+                    }
+                    emailIntent.putExtra(Intent.EXTRA_TEXT, mailText);
+                    StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+                    StrictMode.setVmPolicy(builder.build());
+                    context.startActivity(Intent.createChooser(emailIntent, context.getText(R.string.send_mail)));
 
 
-                        }
-                    });
+                }
+            });
             builder.show();
 
         });
